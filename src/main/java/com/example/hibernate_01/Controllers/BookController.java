@@ -1,7 +1,7 @@
 package com.example.hibernate_01.Controllers;
 
 import com.example.hibernate_01.Model.Book;
-import com.example.hibernate_01.Services.BookService;
+import com.example.hibernate_01.Services.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,22 +13,22 @@ import java.util.Optional;
 public class BookController {
 
     @Autowired
-    private BookService bookService;
+    private BookServiceImpl bookServiceImpl;
 
     @PostMapping
     Book postBook(@RequestBody Book book) {
-        return bookService.save(book);
+        return bookServiceImpl.save(book);
     }
     @GetMapping
     List<Book> getBooks() {
-        return bookService.getAll();
+        return bookServiceImpl.getAll();
     }
     @GetMapping("/title/{title}")
     Optional<Book> getBookByTitle(@PathVariable String title) {
-        return bookService.getByTitle(title);
+        return bookServiceImpl.getByTitle(title);
     }
     @GetMapping("/{id}")
     Optional<Book> getBookById(@PathVariable String id) {
-        return bookService.getById(id);
+        return bookServiceImpl.getById(id);
     }
 }

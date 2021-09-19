@@ -3,7 +3,7 @@ package com.example.hibernate_01.Services;
 
 import com.example.hibernate_01.Model.Book;
 import com.example.hibernate_01.Repositories.BookRepository;
-import com.example.hibernate_01.Services.Interfaces.InterfaceBookService;
+import com.example.hibernate_01.Services.Interfaces.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BookService implements InterfaceBookService {
+public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
 

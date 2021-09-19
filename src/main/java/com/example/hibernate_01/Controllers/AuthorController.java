@@ -1,7 +1,7 @@
 package com.example.hibernate_01.Controllers;
 
 import com.example.hibernate_01.Model.Author;
-import com.example.hibernate_01.Services.AuthorService;
+import com.example.hibernate_01.Services.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +12,15 @@ import java.util.List;
 public class AuthorController {
 
     @Autowired
-    private AuthorService authorService;
+    private AuthorServiceImpl authorServiceImpl;
 
     @PostMapping
     Author postAuthor(@RequestBody Author author) {
-        return authorService.save(author);
+        return authorServiceImpl.save(author);
     }
     @GetMapping
     List<Author> getAuthor() {
-        return authorService.getAll();
+        return authorServiceImpl.getAll();
     }
 
 }
