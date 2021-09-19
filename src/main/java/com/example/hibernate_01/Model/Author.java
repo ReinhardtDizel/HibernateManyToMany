@@ -2,6 +2,7 @@ package com.example.hibernate_01.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -23,7 +24,8 @@ public class Author {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
-    @Column(name = "bio", length = 2000, nullable = true)
+    @Column(name = "bio", nullable = true)
+    @Type(type="text")
     private String bio;
 
     @ManyToMany(mappedBy = "authors")
