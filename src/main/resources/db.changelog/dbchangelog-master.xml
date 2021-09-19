@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd ">
+    <changeSet  id="set_1.000"  author="dizel">
+        <createTable  tableName="book">
+            <column  name="book_id"  type="varchar2(255)">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="title"  type="varchar2(100)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="author"  type="varchar2(300)">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="book"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet  id="set_1.001"  author="dizel">
+        <createTable  tableName="author">
+            <column  name="author_id"  type="varchar2(255)">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="author"  type="varchar2(100)">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="author"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet  id="set_1.002"  author="dizel">
+        <createTable  tableName="books_authors">
+            <column  name="book_id"  type="varchar2(255)">
+                <constraints  foreignKeyName="fk001book_id"
+                              references="book(book_id)"
+                              nullable="false"
+                              deleteCascade="true"
+
+                />
+            </column>
+            <column  name="author_id"  type="varchar2(255)">
+                <constraints  foreignKeyName="fk001author_id"
+                              references="author(author_id)"
+                              nullable="false"
+                              deleteCascade="true"
+                />
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="books_authors"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="set_2.000" author="dizel">
+        <addColumn tableName="author">
+            <column name="author_BIO"
+                    position="3"
+                    type="varchar2(2000)"
+            >
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+        <rollback>
+        <dropColumn  tableName="author">
+            <column  name="author_BIO"/>
+        </dropColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="set_2.001" author="dizel">
+        <dropColumn tableName="book"
+                    columnName="author">
+        </dropColumn>
+    </changeSet>
+
+ <!--   !-->
+
+</databaseChangeLog>
