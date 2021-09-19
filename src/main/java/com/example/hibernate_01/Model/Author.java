@@ -1,9 +1,11 @@
 package com.example.hibernate_01.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -25,6 +27,7 @@ public class Author {
     private String bio;
 
     @ManyToMany(mappedBy = "authors")
+    @JsonIgnoreProperties("authors") // https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue
     private Set<Book> books = new HashSet<>();
 
     public String getId() {
