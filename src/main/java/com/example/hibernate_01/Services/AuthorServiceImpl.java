@@ -2,7 +2,7 @@ package com.example.hibernate_01.Services;
 
 import com.example.hibernate_01.Model.Author;
 import com.example.hibernate_01.Repositories.AuthorRepository;
-import com.example.hibernate_01.Services.Interfaces.InterfaceAuthorService;
+import com.example.hibernate_01.Services.Interfaces.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AuthorService implements InterfaceAuthorService {
+public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private AuthorRepository authorRepository;
     @Override

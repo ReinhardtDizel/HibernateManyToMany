@@ -29,7 +29,7 @@ public class Author {
     private String bio;
 
     @ManyToMany(mappedBy = "authors")
-    @JsonIgnoreProperties("authors")//https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue
+    @JsonIgnoreProperties("authors") // https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue
     private Set<Book> books = new HashSet<>();
 
     public String getId() {
