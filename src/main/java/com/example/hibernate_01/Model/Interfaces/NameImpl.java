@@ -1,13 +1,13 @@
 package com.example.hibernate_01.Model.Interfaces;
 
-public class NameImpl implements Name {
+public class NameImpl implements Name{
 
     public NameImpl(String fullName){
         this.fullName = fullName;
-        this.firstName = setFirstName(fullName);
-        this.middleName = setMiddleName(fullName);
-        this.lastName = setLastName(fullName);
-        this.shortName = setShortName(fullName);
+        this.firstName = setFirstName();
+        this.middleName = setMiddleName();
+        this.lastName = setLastName();
+        this.shortName = setShortName();
     }
 
     public NameImpl() {
@@ -44,38 +44,59 @@ public class NameImpl implements Name {
         this.fullName = fullName;
     }
 
-    private String setFirstName(String fullName) {
-        String[] names = fullName.split(" ");
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    private String setFirstName() {
+        String[] names = this.fullName.split(" ");
         if(names.length >= 2) {
             return names[0];
         }
         return null;
     }
-    private String setMiddleName(String fullName) {
-        String[] names = fullName.split(" ");
+    private String setMiddleName() {
+        String[] names = this.fullName.split(" ");
         if(names.length >= 2) {
             return names[1];
         }
         return null;
     }
-    private String setLastName(String fullName) {
-        String[] names = fullName.split(" ");
+    private String setLastName() {
+        String[] names = this.fullName.split(" ");
         if(names.length == 2) {
             return names[2];
         }
         return null;
     }
 
-    private String setShortName(String fullName) {
+    private String setShortName() {
         String middleNameFirstChar = this.middleName.charAt(0) + ".";
         String lastNameFirstChar = this.lastName.charAt(0) + ".";
         String shortName = this.firstName +  " " + middleNameFirstChar + lastNameFirstChar;
         return shortName;
     }
 
+
     private String firstName;
     private String lastName;
     private String middleName;
     private String shortName;
     private String fullName;
+
+    public String toString() {
+        return this.toString();
+    }
 }

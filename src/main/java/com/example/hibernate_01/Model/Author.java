@@ -2,11 +2,10 @@ package com.example.hibernate_01.Model;
 
 import com.example.hibernate_01.Model.Interfaces.NameImpl;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -25,20 +24,14 @@ public class Author {
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
-    @Column(name = "first_name", length = 255, nullable = false)
-    private String firstName;
-
-    @Column(name = "last_name", length = 255, nullable = false)
-    private String lastName;
-
-    @Column(name = "middle_name", length = 255, nullable = false)
-    private String middleName;
-
-    @Column(name = "short_name", length = 255, nullable = false)
-    private String shortName;
-
-    @Column(name = "full_name", length = 255, nullable = false)
-    private String fullName;
+    @Columns(columns = { @Column(name = "first_name"),
+                         @Column(name = "last_name"),
+                         @Column(name = "middle_name"),
+                         @Column(name = "short_name"),
+                         @Column(name = "full_name")
+    })
+    @Type(type = "com.example.hibernate_01.Types.NameType")
+    private NameImpl name;
 
     @Column(name = "bio", nullable = true)
     @Type(type="text")
@@ -58,9 +51,12 @@ public class Author {
     @JsonIgnoreProperties("authors") // https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue
     private Set<Book> books = new HashSet<>();
 
-    @PrePersist
-    public void createNames() {
+    public NameImpl getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = new NameImpl(name);
     }
 
     public String getId() {
@@ -69,46 +65,6 @@ public class Author {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getBio() {
