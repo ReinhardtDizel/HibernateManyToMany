@@ -1,11 +1,14 @@
 package com.example.hibernate_01.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,8 +32,18 @@ public class Book {
     private String description;
 
     @Column(name = "publishing_date", nullable = false)
-    @Type(type="date")
-    private Date publishingDate;
+    @Type(type="timestamp")
+    private Timestamp publishingDate;
+
+    @Column(name = "CREATED_AT", nullable = false)
+    @Type(type="timestamp")
+    @CreationTimestamp
+    private Timestamp createdAt;
+
+    @Column(name = "UPDATED_AT", nullable = false)
+    @Type(type="timestamp")
+    @UpdateTimestamp
+    private Timestamp updatedAt;
 
     @Column(name = "image_url", length = 300, nullable = true)
     private String imageSource;
@@ -52,11 +65,11 @@ public class Book {
         this.description = description;
     }
 
-    public Date getPublishingDate() {
+    public Timestamp getPublishingDate() {
         return publishingDate;
     }
 
-    public void setPublishingDate(Date publishingDate) {
+    public void setPublishingDate(Timestamp publishingDate) {
         this.publishingDate = publishingDate;
     }
 
