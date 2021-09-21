@@ -24,26 +24,24 @@ public class Author {
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
-    @Columns(columns = { @Column(name = "first_name"),
-                         @Column(name = "last_name"),
+    @Columns(columns = { @Column(name = "full_name"),
+                         @Column(name = "first_name"),
                          @Column(name = "middle_name"),
-                         @Column(name = "short_name"),
-                         @Column(name = "full_name")
+                         @Column(name = "last_name"),
+                         @Column(name = "short_name")
     })
-    @Type(type = "com.example.hibernate_01.Types.NameType")
+    @Type(type = "com.example.hibernate_01.Types.NameTypeDescriptor")
     private NameImpl name;
 
     @Column(name = "bio", nullable = true)
     @Type(type="text")
     private String bio;
 
-    @Column(name = "CREATED_AT", nullable = false)
-    @Type(type="timestamp")
+    @Column(name = "CREATED_AT", updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @Column(name = "UPDATED_AT", nullable = false)
-    @Type(type="timestamp")
+    @Column(name = "UPDATED_AT")
     @UpdateTimestamp
     private Timestamp updatedAt;
 

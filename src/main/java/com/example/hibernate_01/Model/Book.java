@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -35,13 +36,11 @@ public class Book {
     @Type(type="timestamp")
     private Timestamp publishingDate;
 
-    @Column(name = "CREATED_AT", nullable = false)
-    @Type(type="timestamp")
+    @Column(name = "CREATED_AT", updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @Column(name = "UPDATED_AT", nullable = false)
-    @Type(type="timestamp")
+    @Column(name = "UPDATED_AT")
     @UpdateTimestamp
     private Timestamp updatedAt;
 

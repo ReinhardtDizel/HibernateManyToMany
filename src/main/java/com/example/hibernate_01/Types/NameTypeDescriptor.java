@@ -10,10 +10,8 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
-import java.util.Objects;
 
-public class NameType implements UserType {
+public class NameTypeDescriptor implements UserType {
     @Override
     public int[] sqlTypes() {
         return new int[] {
@@ -40,21 +38,21 @@ public class NameType implements UserType {
     }
 
     @Override
-    public int hashCode(Object o) throws HibernateException {
-        return 0;
+    public int hashCode(Object x) throws HibernateException {
+        if (x == null) return 0;
+        return x.hashCode();
     }
 
     @Override
     public Object nullSafeGet(ResultSet resultSet, String[] strings,
                               SharedSessionContractImplementor sharedSessionContractImplementor, Object owner)
             throws HibernateException, SQLException {
-
         NameImpl nameImpl = new NameImpl();
-
-        String fullName = resultSet.getString(strings[0]);
-        if(fullName != null)
-            nameImpl.setFullName(fullName);
-
+        nameImpl.setFullName(resultSet.getString(strings[0]));
+        nameImpl.setFirstName(resultSet.getString(strings[1]));
+        nameImpl.setMiddleName(resultSet.getString(strings[2]));
+        nameImpl.setLastName(resultSet.getString(strings[3]));
+        nameImpl.setShortName(resultSet.getString(strings[4]));
         return nameImpl;
     }
 
@@ -62,19 +60,20 @@ public class NameType implements UserType {
     public void nullSafeSet(PreparedStatement st, Object value,
                             int index, SharedSessionContractImplementor session)
             throws HibernateException, SQLException {
-        if (Objects.isNull(value)) {
-            st.setNull(index, Types.VARCHAR);
-            st.setNull(index + 1, Types.VARCHAR);
-            st.setNull(index + 2, Types.VARCHAR);
-            st.setNull(index + 3, Types.VARCHAR);
-            st.setNull(index + 4, Types.VARCHAR);
-        } else {
-            final NameImpl nameImpl = (NameImpl) value;
-            st.setString(index,nameImpl.getFullName());
-            st.setString(index+1,nameImpl.getFirstName());
-            st.setString(index+2,nameImpl.getMiddleName());
-            st.setString(index+3,nameImpl.getLastName());
-            st.setString(index+4,nameImpl.getShortName());
+        NameImpl NameImpl = (NameImpl) value;
+        if (NameImpl != null) {
+            st.setString(index, NameImpl.getFullName());
+            st.setString(index+1, NameImpl.getFirstName());
+            st.setString(index+2, NameImpl.getMiddleName());
+            st.setString(index+3, NameImpl.getLastName());
+            st.setString(index+4, NameImpl.getShortName());
+        }
+        else{
+            st.setNull(index+0, sqlTypes()[0]);
+            st.setNull(index+1, sqlTypes()[1]);
+            st.setNull(index+2, sqlTypes()[2]);
+            st.setNull(index+3, sqlTypes()[3]);
+            st.setNull(index+4, sqlTypes()[4]);
         }
     }
 
@@ -89,17 +88,22 @@ public class NameType implements UserType {
     }
 
     @Override
-    public Serializable disassemble(Object o) throws HibernateException {
-        return null;
+    public Serializable disassemble(Object value) throws HibernateException {
+        return (Serializable) value;
     }
 
     @Override
     public Object assemble(Serializable serializable, Object o) throws HibernateException {
-        return null;
+        return serializable;
     }
 
     @Override
     public Object replace(Object o, Object o1, Object o2) throws HibernateException {
-        return null;
+        return deepCopy(o);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }
