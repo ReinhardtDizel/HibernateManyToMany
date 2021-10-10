@@ -2,6 +2,7 @@ package com.example.hibernate_01.Model;
 
 import com.example.hibernate_01.Model.Interfaces.NameImpl;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.*;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -53,8 +55,8 @@ public class Author {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = new NameImpl(name);
+    public void setName(NameImpl name) {
+        this.name = name;
     }
 
     public String getId() {
@@ -79,5 +81,30 @@ public class Author {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id='" + id + '\'' +
+                ", name=" + name +
+                ", bio='" + bio + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", books=" + books +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Author)) return false;
+        Author author = (Author) o;
+        return getId().equals(author.getId()) && Objects.equals(getName(), author.getName()) && Objects.equals(getBio(), author.getBio()) && Objects.equals(createdAt, author.createdAt) && Objects.equals(updatedAt, author.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getBio(), createdAt, updatedAt);
     }
 }

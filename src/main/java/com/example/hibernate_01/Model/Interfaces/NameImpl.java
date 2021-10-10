@@ -4,14 +4,22 @@ import java.io.Serializable;
 
 public class NameImpl implements Serializable {
 
-    public NameImpl(String name){
+   public NameImpl(String name){
         this.fullName = name;
         String[] names = this.splitName(name);
-        String shortName = this.setShortName(names[0],names[1],names[2]);
+        String shortName = this.generateShortName(names[0],names[1],names[2]);
         this.setFirstName(names[0]);
         this.setMiddleName(names[1]);
         this.setLastName(names[2]);
         this.setShortName(shortName);
+    }
+
+   public NameImpl(String fullName, String firstName, String middleName, String lastName, String shortName) {
+        this.fullName = fullName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.shortName = shortName;
     }
 
     public NameImpl() {
@@ -20,34 +28,43 @@ public class NameImpl implements Serializable {
     public String getFirstName() {
         return firstName;
     }
-    public String getLastName() {
-        return lastName;
-    }
-    public String getMiddleName() {
-        return middleName;
-    }
-    public String getShortName() {
-        return shortName;
-    }
-    public String getFullName() {
-        return fullName;
-    }
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
+
+    public String getShortName() {
+        return shortName;
+    }
+
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     private String[] splitName(String name) {
         String[] names = name.split(" ");
         if(names.length >= 2) {
@@ -55,7 +72,7 @@ public class NameImpl implements Serializable {
         }
         return null;
     }
-    private String setShortName(String firstName, String a, String b) {
+    private String generateShortName(String firstName, String a, String b) {
         String middleNameFirstChar = a.charAt(0) + ".";
         String lastNameFirstChar = b.charAt(0) + ".";
         String shortName = firstName +  " " + middleNameFirstChar + lastNameFirstChar;
@@ -69,6 +86,14 @@ public class NameImpl implements Serializable {
     private String fullName;
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NameImpl)) return false;
+        NameImpl name = (NameImpl) o;
+        return firstName.equals(name.firstName) && lastName.equals(name.lastName) && middleName.equals(name.middleName) && shortName.equals(name.shortName) && fullName.equals(name.fullName);
+    }
+
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 31 * hash + (null == firstName?null:firstName.hashCode());
@@ -77,23 +102,6 @@ public class NameImpl implements Serializable {
         hash = 31 * hash + (null == shortName?null:shortName.hashCode());
         hash = 31 * hash + (null == fullName?null:fullName.hashCode());
         return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(this == obj) {
-            return true;
-        }
-        if(!(obj instanceof NameImpl)) {
-            return false;
-        }
-        NameImpl  name = (NameImpl) obj;
-        return ( this.getShortName() == name.getShortName() ||
-                (this.getShortName() != null
-                && this.getShortName().equals(name.getShortName())))
-                &&( this.getFullName() == name.getFullName() ||
-                (this.getFullName() != null
-                        && this.getFullName().equals(name.getFullName())));
     }
 
     @Override
