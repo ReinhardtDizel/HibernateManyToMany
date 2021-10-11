@@ -5,12 +5,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -34,7 +33,7 @@ public class Book {
 
     @Column(name = "publishing_date", nullable = false)
     @Type(type="timestamp")
-    private Timestamp publishingDate;
+    private Timestamp publishing;
 
     @Column(name = "CREATED_AT", updatable = false)
     @CreationTimestamp
@@ -45,7 +44,7 @@ public class Book {
     private Timestamp updatedAt;
 
     @Column(name = "image_url", length = 300, nullable = true)
-    private String imageSource;
+    private String image;
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
@@ -64,20 +63,20 @@ public class Book {
         this.description = description;
     }
 
-    public Timestamp getPublishingDate() {
-        return publishingDate;
+    public Timestamp getPublishing() {
+        return publishing;
     }
 
-    public void setPublishingDate(Timestamp publishingDate) {
-        this.publishingDate = publishingDate;
+    public void setPublishing(Timestamp publishingDate) {
+        this.publishing = publishingDate;
     }
 
-    public String getImageSource() {
-        return imageSource;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageSource(String imageSource) {
-        this.imageSource = imageSource;
+    public void setImage(String imageSource) {
+        this.image = imageSource;
     }
 
     public String getId() {
@@ -102,5 +101,32 @@ public class Book {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", publishing=" + publishing +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", image='" + image + '\'' +
+                ", authors=" + authors +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return getId().equals(book.getId()) && getTitle().equals(book.getTitle()) && getDescription().equals(book.getDescription()) && getPublishing().equals(book.getPublishing()) && Objects.equals(createdAt, book.createdAt) && Objects.equals(updatedAt, book.updatedAt) && Objects.equals(getImage(), book.getImage()) && Objects.equals(getAuthors(), book.getAuthors());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getDescription(), getPublishing(), createdAt, updatedAt, getImage(), getAuthors());
     }
 }
