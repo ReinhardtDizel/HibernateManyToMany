@@ -23,7 +23,7 @@ public class Author {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", nullable = false)
     private String id;
 
     @Columns(columns = { @Column(name = "full_name"),
@@ -91,7 +91,6 @@ public class Author {
                 ", bio='" + bio + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", books=" + books +
                 '}';
     }
 

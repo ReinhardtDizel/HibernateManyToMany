@@ -3,6 +3,7 @@ package com.example.hibernate_01.Services;
 
 import com.example.hibernate_01.Model.Author;
 import com.example.hibernate_01.Model.Book;
+import com.example.hibernate_01.Model.Interfaces.NameImpl;
 import com.example.hibernate_01.Repositories.BookRepository;
 import com.example.hibernate_01.Services.Interfaces.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -40,15 +43,25 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id);
     }
     @Override
-    public ResponseEntity<Book> editBookAuthors(String id, Author author) {
-        if(this.existsById(id)){
+    public ResponseEntity<Book> editBook(String id, Book book) {
+        if(this.existsById(id)) {
             Book existBook = this.getById(id).get();
-            existBook.getAuthors().add(author);
+            existBook.setTitle(book.getTitle());
+            existBook.setDescription(book.getDescription());
+            existBook.setPublishing(book.getPublishing());
 
-            return new ResponseEntity<>(this.save(existBook), HttpStatus.OK);
+            existBook.getAuthors().clear();
+            existBook.setAuthors(book.getAuthors());
+
+            return new ResponseEntity<>(bookRepository.save(existBook), HttpStatus.OK);
         }
-        else return null;
+        else if(!this.existsById(id)) {
+            return new ResponseEntity<>(bookRepository.save(book), HttpStatus.CREATED);
+        }
+        else
+            return new ResponseEntity<>( null, HttpStatus.NOT_MODIFIED);
     }
+
     @Override
     public List<Book> getAll() {
         return bookRepository.findAll();

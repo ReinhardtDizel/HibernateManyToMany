@@ -78,8 +78,8 @@ public class NameTypeDescriptor implements UserType {
     }
 
     @Override
-    public Object deepCopy(Object o) throws HibernateException {
-        return null;
+    public Object deepCopy(Object value) throws HibernateException {
+        return value;
     }
 
     @Override
@@ -98,8 +98,8 @@ public class NameTypeDescriptor implements UserType {
     }
 
     @Override
-    public Object replace(Object o, Object o1, Object o2) throws HibernateException {
-        return deepCopy(o);
+    public Object replace(Object original, Object target, Object owner) throws HibernateException {
+        return original;
     }
 
     @Override

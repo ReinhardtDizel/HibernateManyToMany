@@ -13,8 +13,7 @@ public interface BookService {
     boolean existsById(String id);
     Optional<Book> getByTitle(String title);
     Optional<Book> getById(String id);
-
-    ResponseEntity<Book> editBookAuthors(String id, Author author);
+    ResponseEntity<Book> editBook(String id, Book book);
 
     List<Book> getAll();
     void deleteById(String id);
