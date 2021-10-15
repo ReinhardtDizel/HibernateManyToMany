@@ -1,19 +1,15 @@
 package com.example.hibernate_01.Controllers;
 
-import com.example.hibernate_01.Model.Author;
 import com.example.hibernate_01.Model.Book;
-import com.example.hibernate_01.Model.Interfaces.NameImpl;
 import com.example.hibernate_01.Services.AuthorServiceImpl;
 import com.example.hibernate_01.Services.BookServiceImpl;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/books")

@@ -2,7 +2,6 @@ package com.example.hibernate_01.Model;
 
 import com.example.hibernate_01.Model.Interfaces.NameImpl;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.*;
 
 import javax.persistence.Entity;
@@ -23,7 +22,7 @@ public class Author {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
     @Columns(columns = { @Column(name = "full_name"),
