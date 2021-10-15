@@ -1,7 +1,6 @@
 package com.example.hibernate_01.Services;
 
 import com.example.hibernate_01.Model.Author;
-import com.example.hibernate_01.Model.Book;
 import com.example.hibernate_01.Repositories.AuthorRepository;
 import com.example.hibernate_01.Services.Interfaces.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {

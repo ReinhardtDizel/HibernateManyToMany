@@ -24,7 +24,7 @@ public class Hibernate01Application {
                 registry.addMapping("/books").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/authors").allowedOrigins("http://localhost:8080");
                 registry.addMapping("/authors").allowedOrigins("http://localhost:3000");
-                registry.addMapping("/*/*").allowedOrigins("*").allowedMethods("GET", "POST", "OPTIONS", "PUT");
+                registry.addMapping("/*/*").allowedOrigins("*").allowedMethods("GET", "POST", "OPTIONS", "PUT","DELETE");
                 registry.addMapping("/**");
 
             }

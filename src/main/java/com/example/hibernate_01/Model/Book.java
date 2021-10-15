@@ -43,8 +43,10 @@ public class Book {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @Column(name = "image_url", length = 300, nullable = true)
-    private String image;
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    @JsonIgnoreProperties("book")
+    private Set<Image> images = new HashSet<>();
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
@@ -54,30 +56,6 @@ public class Book {
     )
     @JsonIgnoreProperties("books") // https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue
     private Set<Author> authors = new HashSet<>();
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Timestamp getPublishing() {
-        return publishing;
-    }
-
-    public void setPublishing(Timestamp publishingDate) {
-        this.publishing = publishingDate;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String imageSource) {
-        this.image = imageSource;
-    }
 
     public String getId() {
         return id;
@@ -93,6 +71,46 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Timestamp getPublishing() {
+        return publishing;
+    }
+
+    public void setPublishing(Timestamp publishing) {
+        this.publishing = publishing;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
 
     public Set<Author> getAuthors() {
@@ -112,7 +130,7 @@ public class Book {
                 ", publishing=" + publishing +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", image='" + image + '\'' +
+                ", images=" + images +
                 ", authors=" + authors +
                 '}';
     }
@@ -122,11 +140,11 @@ public class Book {
         if (this == o) return true;
         if (!(o instanceof Book)) return false;
         Book book = (Book) o;
-        return getId().equals(book.getId()) && getTitle().equals(book.getTitle()) && getDescription().equals(book.getDescription()) && getPublishing().equals(book.getPublishing()) && Objects.equals(createdAt, book.createdAt) && Objects.equals(updatedAt, book.updatedAt) && Objects.equals(getImage(), book.getImage()) && Objects.equals(getAuthors(), book.getAuthors());
+        return getId().equals(book.getId()) && getTitle().equals(book.getTitle()) && getDescription().equals(book.getDescription()) && getPublishing().equals(book.getPublishing()) && Objects.equals(createdAt, book.createdAt) && Objects.equals(updatedAt, book.updatedAt) && getImages().equals(book.getImages()) && getAuthors().equals(book.getAuthors());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getDescription(), getPublishing(), createdAt, updatedAt, getImage(), getAuthors());
+        return Objects.hash(getId(), getTitle(), getDescription(), getPublishing(), createdAt, updatedAt, getImages(), getAuthors());
     }
 }
