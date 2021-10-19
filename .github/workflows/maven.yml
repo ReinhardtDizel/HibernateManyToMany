@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
 
     services:
       # mysql-service Label used to access the service container
