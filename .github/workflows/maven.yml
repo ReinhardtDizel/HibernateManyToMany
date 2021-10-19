@@ -20,6 +20,12 @@ jobs:
          MYSQL_PASSWORD: root
          MYSQL_ROOT_PASSWORD: root
          MYSQL_DATABASE: test_db
+         
+        steps: 
+          - name: Set up MySQL 
+            run: | 
+             sudo /etc/init.d/mysql start 
+             mysql -e 'CREATE DATABASE ${{ env.MYSQL_DATABASE }};' -u${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }}
         ## map the "external" 33306 port with the "internal" 3306
         ports:
           - 3306:3306
@@ -28,9 +34,7 @@ jobs:
           --health-cmd="mysqladmin ping"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=3
-          steps: - name: Set up MySQL run: | sudo /etc/init.d/mysql start mysql -e 'CREATE DATABASE ${{ env.MYSQL_DATABASE }};' -u${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }}
-
+          --health-retries=3      
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
