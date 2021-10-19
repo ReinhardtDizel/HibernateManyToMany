@@ -55,14 +55,6 @@
             <version>5.3.6.Final</version>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-        </dependency>
-        !-->
-
-
     </dependencies>
 
     <build>
@@ -73,5 +65,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
